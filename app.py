@@ -40,7 +40,7 @@ def index():
         /api/v1.0/stations<br/>
         /api/v1.0/tobs<br/>
         /api/v1.0/<start>yyyy-mm-dd<br>
-        /api/v1.0/<start>/<end>yyyy-mm-dd/yyyy-mm-dd<br/>
+        /api/v1.0/<start><end>yyyy-mm-dd/yyyy-mm-dd<br/>
     """
 
 # #Convert the 12 months of precip data query results to a dictionary 
@@ -50,8 +50,6 @@ def index():
 def precipitation():
 
     """Return a list of precipitation data, including date and precipitation measurement"""
-    #Query precipitation data
-    #results = session.query(Measurement.date, Measurement.prcp).all()
 
     #find date 1 year ago from last data point in the database
     session.query(Measurement.date).order_by(Measurement.date.desc()).first()
