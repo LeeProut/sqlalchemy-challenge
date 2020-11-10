@@ -43,7 +43,7 @@ def index():
         /api/v1.0/<start>/<end>yyyy-mm-dd/yyyy-mm-dd<br/>
     """
 
-# #Convert the query results to a dictionary 
+# #Convert the 12 months of precip data query results to a dictionary 
 # #using date as the key and prcp as the value.
 # #Return the JSON representation of your dictionary.
 @app.route("/api/v1.0/precipitation")
@@ -51,7 +51,17 @@ def precipitation():
 
     """Return a list of precipitation data, including date and precipitation measurement"""
     #Query precipitation data
-    results = session.query(Measurement.date, Measurement.prcp).all()
+    #results = session.query(Measurement.date, Measurement.prcp).all()
+
+    #find date 1 year ago from last data point in the database
+    session.query(Measurement.date).order_by(Measurement.date.desc()).first()
+
+    query_date = dt.date(2017, 8, 23) - dt.timedelta(days=365)
+    query_date
+
+    # Perform a query to retrieve the data and precipitation scores
+    results = session.query(Measurement.date, Measurement.prcp).\
+                    filter(Measurement.date >= query_date).all()
 
     precipitation = []
     for date, prcp in results: 
